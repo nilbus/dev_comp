@@ -2,6 +2,7 @@
 
 def main
   input = STDIN.read.each_line.to_a
+  input.shift #ignore count
 
   $squares = (0..Math.sqrt(2147483647).to_i).map{|x|x*x}
   
@@ -12,23 +13,19 @@ def main
 end
 
 def find_squares(target)
+  sqrt = Math.sqrt(target).to_i
   squares = $squares
-  squares2 = squares.dup
 
   results = 0
-
-  squares.each_with_index do |a, i|
-    squares2.each do |b|
-      if a + b == target
-        results += 1
-      end
-      break if b > target
+  
+  sqrt.downto(0).each do |i|
+    foo = Math.sqrt(target-i**2)
+    if foo == foo.to_i and foo**2 + i**2 == target
+      results += 0.5
     end
-    squares2.shift # discard first to get rid of redundant checks
-    break if a > target
   end
   
-  puts results
+  puts results.ceil
 end
 
 def log(msg)
