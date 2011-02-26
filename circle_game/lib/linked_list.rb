@@ -4,7 +4,7 @@ class LinkedList
 
 	def initialize
 		@first = Node.new nil
-		@last = Node.new nil
+		@last = @first # circular
 
 		@first.next = @last
 		@last.prev = @first
@@ -31,12 +31,28 @@ class LinkedList
 		@size += 1
 	end
 
+	def last_node
+		if @size <= 0
+			raise "No objects in list"
+		end
+
+		return @last.prev
+	end
+
 	def last
 		if @size <= 0
 			raise "No objects in list"
 		end
 
 		return @last.prev.object
+	end
+
+	def first_node
+		if @size <= 0
+			raise "No objects in list"
+		end
+
+		return @first.next
 	end
 
 	def first
