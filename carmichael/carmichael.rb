@@ -1,4 +1,28 @@
 #!/usr/bin/env ruby
+def primefactor(num)
+  factors = []
+  index = 0
+
+  while(num > 1)
+    if(num % PRIMES[index] == 0)
+      factors.push(PRIMES[index])
+      num /= PRIMES[index]
+    else
+      index += 1
+    end
+  end
+
+  return factors
+end
+
+def phi(num)
+  facs = primefactor(num).uniq
+  facs.each do |factor|
+    num *= (1 - (1.0/factor))
+  end
+
+  return num.to_i
+end
 
 def main
   input = STDIN.read.each_line.to_a
@@ -17,7 +41,8 @@ def carmichael(n)
   (2...n).each do |a|
     log "a=#{a}"
     #log "#{((a**n) % n)}, #{a}"
-    if ((a**n) % n) != a
+
+    if ((a**( n % phi(n) ) ) % n) != a
       log 'break'
       return false
     end
@@ -846,3 +871,6 @@ PRIMES= [
      ]
 
 main
+
+
+
